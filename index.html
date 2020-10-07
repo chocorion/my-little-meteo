@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Application météo</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+    
+    <!-- https://erikflowers.github.io/weather-icons/-->
+    <link rel="stylesheet" href="resources/style/weather-icons.min.css">
+    <link rel="stylesheet" href="resources/style/style.css">
+
+
+    <script src="src/utils.js" defer></script>
+    <script src="src/component/searchBar.js" defer></script>
+    <script src="src/component/temperatureChart.js" defer></script>
+    <script src="src/weather.js" defer></script>
+</head>
+<body>
+
+    <div class="container-md">
+
+
+        <div id="searchBar" class="row mt-5 justify-content-between">
+            <div class="col-4">
+                <form class="input-group">
+                    <input class="form-control" type="text" placeholder="Recherche de Ville" aria-label="Recherche de Ville">
+                    <div class="input-group-append">
+                        <button type="button" class="btn btn-primary"> Rechercher </button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-auto">
+                <button type="button" class="btn btn-secondary"> Afficher la carte </button>
+            </div>
+        </div>
+
+
+        <div class="container-md mt-5 bg-light pt-2">
+            <div class="jumbotron">
+                <div class="row">
+                    <div class="col-3">
+                        <h5 class="city-name">Cazaux</h5>
+                        <h1 class="temperature">18°c</h1>
+                        <h3 class="condition">Cloudy</h3>
+                    </div>
+
+                    <div class="col">
+                        <img src="" alt="" class="img-fluid w-25" id="weather-image">
+                    </div>
+                </div>
+            </div>
+
+            <container id="daily-info" class="container">
+                <div class="row panel" id="daily-button-container">
+                    <button data-toggle="collapse" href="#day0-info" class="col p-2 m-2 btn btn-white"     align="center">Jour 0</button>
+                    <button data-toggle="collapse" href="#day1-info" class="col p-2 m-2 btn btn-secondary" align="center">Jour 1</button>
+                    <button data-toggle="collapse" href="#day2-info" class="col p-2 m-2 btn btn-secondary" align="center">Jour 2</button>
+                    <button data-toggle="collapse" href="#day3-info" class="col p-2 m-2 btn btn-secondary" align="center">Jour 3</button>
+                    <button data-toggle="collapse" href="#day4-info" class="col p-2 m-2 btn btn-secondary" align="center">Jour 4</button>
+                </div>
+
+                <div id="day0-info" class="collapse container mt-3 in" data-parent="#daily-info">
+                    <div class="infos"></div>
+                    <canvas class="temperatures"></canvas>
+                </div>
+                <div id="day1-info" class="collapse container mt-3" data-parent="#daily-info">
+                    <div class="infos"></div>
+                    <canvas class="temperatures"></canvas>
+                </div>
+                <div id="day2-info" class="collapse container mt-3" data-parent="#daily-info">
+                    <div class="infos"></div>
+                    <canvas class="temperatures"></canvas>
+                </div>
+                <div id="day3-info" class="collapse container mt-3" data-parent="#daily-info">
+                    <div class="infos"></div>
+                    <canvas class="temperatures"></canvas>
+                </div>
+                <div id="day4-info" class="collapse container mt-3" data-parent="#daily-info">
+                    <div class="infos"></div>
+                    <canvas class="temperatures"></canvas>
+                </div>
+
+        </container>
+        </div>
+
+
+    </div>
+
+
+    <!-- <div id="menu">
+        <form>
+			<input type="text" placeholder="Recherche de Ville">
+            <button type="button">afficher</button>
+        </form>
+    </div>
+
+    <div class="my-data hidden">
+        <div class="weather">None</div>
+        <div class="temperature">None</div>
+        <div class="temperature-min-max">None</div>
+        <div class="city">None</div>
+        <div class="current-date"></div>
+
+        <div class="sunrise">Le soleil se lève à <span class="info"></span></div>
+        <div class="sunset">Le soleil se couche à <span class="info"></span></div>
+
+        
+
+    </div>
+
+	<pre id="data"></pre> -->
+</body>
+</html>
