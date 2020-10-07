@@ -9,6 +9,7 @@ class Application {
         this.onSearch = this.onSearch.bind(this);
 
         this._searchBar = new SearchBar(this.onSearch);
+        this._collapseDays = new CollapseDays();
     }
 
     getCityData(city) {
