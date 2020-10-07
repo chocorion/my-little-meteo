@@ -17,6 +17,7 @@ class Application {
 
 
     onSearch(city) {
+        document.querySelector("#mainContainer").classList.remove("hidden");
         this.getCityData(city)
             .then(data => {
                 // this._info.innerHTML = JSON.stringify(data, null, 4);

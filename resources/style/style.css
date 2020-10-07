@@ -1,3 +1,7 @@
+.hidden {
+    visibility: hidden;
+}
+
 /* html, body {
     height: 100%;
     /*overflow: hidden;
@@ -8,9 +12,7 @@ body {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
-.hidden {
-    visibility: hidden;
-}
+
 
 .my-data {
     color: #eff0f1;
