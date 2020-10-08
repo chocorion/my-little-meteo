@@ -3,6 +3,7 @@
 
 class Application {
     _API_ENTRY = "https://www.prevision-meteo.ch/services/json/"
+    _CITY_NOT_FOUND_ERROR = "11";
 
     constructor() {
         this._info = document.querySelector("#data");
@@ -18,11 +19,22 @@ class Application {
 
 
     onSearch(city) {
-        document.querySelector("#mainContainer").classList.remove("hidden");
         this.getCityData(city)
-            .then(data => {
-                // this._info.innerHTML = JSON.stringify(data, null, 4);
+        .then(data => {               
+               if (data.errors !== undefined) {
+                   console.log("There is an error...-> " + data.errors.code);
+                   if (data.errors[0].code == this._CITY_NOT_FOUND_ERROR) {
+                       console.log("City not found error !");
+                       document.querySelector("#error-city-not-found").classList.remove("hidden");
+
+                        return;
+                    }
+                }
+
+                document.querySelector("#mainContainer").classList.remove("hidden");
+                document.querySelector("#error-city-not-found").classList.add("hidden");
                 
+
                 this._data = data;
                 this.updateInformation();
 
@@ -41,22 +53,20 @@ class Application {
         console.log("Updating informations...");
         console.log(JSON.stringify(this._data, null, 4));
 
-        
+        this.updateJumbotron()
+        this._collapseDays.updateCollapseInfos(this._data);
+    }
+    
+    updateJumbotron() {
         document.querySelector(".jumbotron .city-name").innerHTML = this._data["city_info"]["name"];
         document.querySelector(".jumbotron .condition").innerHTML = this._data["current_condition"]["condition"];
         document.querySelector(".jumbotron .temperature").innerHTML = this._data["current_condition"]["tmp"] + "°c";
-        // document.querySelector(".temperature-min-max").innerHTML = `(${this._data["fcst_day_0"]["tmin"]}|${this._data["fcst_day_0"]["tmax"]})`;
-        // document.querySelector(".current-date").innerHTML = `Today - ${this._data["current_condition"]["hour"]}`
-        // document.querySelector(".sunrise .info").innerHTML = this._data["city_info"]["sunrise"]
-        // document.querySelector(".sunset .info").innerHTML = this._data["city_info"]["sunset"]
         
         const image = document.querySelector('#weather-image');
         image.setAttribute(
             'src',
             `resources/weather_img/${conditions[this._data["current_condition"]["condition"]]}.svg`
-        )
-
-        this._collapseDays.updateCollapseInfos(this._data);
+        );
     }
 }
 
