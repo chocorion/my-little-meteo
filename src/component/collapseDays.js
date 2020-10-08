@@ -3,6 +3,13 @@ class CollapseDays {
         this.setOnClick()
     }
 
+    updateCollapseInfos(infos) {
+        for (let day = 0; day < 5; day++) {
+            this.updateDailyInfo(day, infos[`fcst_day_${day}`]);
+            this.updateDailyTemperatures(day, infos[`fcst_day_${day}`]);
+        }
+    }
+
     setOnClick() {
         this._currentlySelected = document.querySelector(`button[href="#day0-info"]`);
         for (let i = 0; i <= 4; i++) {
@@ -20,6 +27,18 @@ class CollapseDays {
                 }
             )
         }
+    }
+
+    updateDailyInfo(day, infos) {
+        const div = document.querySelector(`#day${day}-info .infos`);
+        div.innerHTML = `Météo pour ${infos["day_long"]} : <br>`
+        div.innerHTML += `Condition : ${infos["condition"]} <br>`
+        div.innerHTML += `Température minimum : ${infos['tmin']} <br>`
+        div.innerHTML += `Température maximum : ${infos['tmax']} <br>`
+    }
+
+    updateDailyTemperatures(day, infos) {
+        new TemperatureChart(day, infos);
     }
 
     
