@@ -30,6 +30,8 @@ class CollapseDays {
     }
 
     updateDailyInfo(day, infos) {
+        document.querySelector(`#day${day}-button`).innerHTML = infos["day_long"];
+
         const div = document.querySelector(`#day${day}-info .infos`);
         div.innerHTML = `Météo pour ${infos["day_long"]} : <br>`
         div.innerHTML += `Condition : ${infos["condition"]} <br>`
