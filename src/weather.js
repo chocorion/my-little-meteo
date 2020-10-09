@@ -2,8 +2,13 @@
 
 
 class Application {
-    _API_ENTRY = "https://www.prevision-meteo.ch/services/json/"
-    _CITY_NOT_FOUND_ERROR = "11";
+    get _API_ENTRY() {
+        return "https://www.prevision-meteo.ch/services/json/"
+    }
+
+    get _CITY_NOT_FOUND_ERROR() {
+        return "11";
+    }
 
     constructor() {
         this._info = document.querySelector("#data");
