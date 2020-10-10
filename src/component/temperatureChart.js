@@ -8,12 +8,19 @@ class TemperatureChart {
                 label: 'Temperature en degres celcius',
                 data: [],
                 fill: false,
+				conditionImages: [],
             }],
         };
 
         for (const hour in infos["hourly_data"]) {
             temperatures.labels.push(hour);
             temperatures.datasets[0].data.push(infos["hourly_data"][hour]["TMP2m"]);
+
+            const img = new Image();
+            const condition = conditions[infos["hourly_data"][hour]["CONDITION"]];
+
+            img.src = `/resources/weather_img/${condition}.svg`;
+            temperatures.datasets[0].conditionImages.push(img);
         }
 
         this._chart = new Chart(ctx, {
@@ -41,10 +48,12 @@ class TemperatureChart {
                 this.data.datasets.forEach(function(dataset, i) {
                     var meta = chartInstance.controller.getDatasetMeta(i);
                     meta.data.forEach(function(bar, index) {
-                        var data = dataset.data[index];
+						const data = dataset.data[index];
+						const img = dataset.conditionImages[index];
+
                         ctx.fillStyle = "#000000"
                         ctx.fillText(data + "°", bar._model.x, bar._model.y - 10);
-                        ctx.fillText("[icon]", bar._model.x, bar._model.y - 25);
+                        ctx.drawImage(img, bar._model.x, bar._model.y - 25, 50, 50);
                     });
                 });
             }
