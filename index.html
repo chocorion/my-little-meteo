@@ -13,19 +13,22 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
     
+    <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.4.3/build/ol.js"></script>
+    
     <!-- https://erikflowers.github.io/weather-icons/-->
     <link rel="stylesheet" href="resources/style/weather-icons.min.css">
     <link rel="stylesheet" href="resources/style/style.css">
 
 
     <script src="src/utils.js" defer></script>
+    <script src="src/component/map.js" defer></script>
     <script src="src/component/collapseDays.js" defer></script>
     <script src="src/component/searchBar.js" defer></script>
     <script src="src/component/temperatureChart.js" defer></script>
     <script src="src/weather.js" defer></script>
 </head>
 <body>
-
+    
     <div class="container-md">
         <div id="searchBar" class="row mt-5 justify-content-between">
             <div class="col-4">
@@ -36,15 +39,21 @@
                     </div>
                 </form>
             </div>
-
+            
             <div class="col-auto">
-                <button type="button" class="btn btn-secondary"> Afficher la carte </button>
+                <button id="toggle-map-button" type="button" class="btn btn-secondary" data-toggle="collapse" href="#mapContainer"> Afficher la carte </button>
             </div>
         </div>
-
+        
         <div class="hidden" id="error-city-not-found">
             City not found, please try another one.
         </div>
+
+        <div id="mapContainer" class="collapse container">
+            <div id="map"></div>
+        </div>
+
+
 
 
         <div id="mainContainer" class="container-md mt-5 bg-light pt-2 hidden">

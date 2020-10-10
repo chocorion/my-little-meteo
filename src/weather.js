@@ -16,6 +16,7 @@ class Application {
 
         this._searchBar = new SearchBar(this.onSearch);
         this._collapseDays = new CollapseDays();
+        this._map = new Map();
     }
 
     getCityData(city) {
