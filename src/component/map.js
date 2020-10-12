@@ -8,9 +8,20 @@ class Map {
                 })
             ],
             view: new ol.View({
-                center: ol.proj.fromLonLat([37.41, 8.82]),
-                zoom: 4
+                center: ol.proj.fromLonLat([2.7, 47.2]),
+                zoom: 5
             })
+        });
+
+
+          
+
+        this._map.on('singleclick', event => {
+            // convert coordinate to EPSG-4326
+            const coordinate = ol.proj.transform(event.coordinate, 'EPSG:3857', 'EPSG:4326');
+            const lon = coordinate[0];
+            const lat = coordinate[1];
+            console.log(lon, lat);
         });
 
         // To solve little bug on map loading when display map for the first time

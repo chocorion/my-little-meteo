@@ -15,7 +15,8 @@ class SearchBar {
             'click',
             event => {
                 event.preventDefault();
-                this._onClick(this._text.value);
+                if (this._text.value !== '')
+                    this._onClick(this._text.value);
             }
         );
     }
