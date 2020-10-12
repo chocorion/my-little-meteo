@@ -1,5 +1,5 @@
 class Map {
-    constructor() {
+    constructor(onClick) {
         this._map = new ol.Map({
             target: 'map',
             layers: [
@@ -22,6 +22,7 @@ class Map {
             const lon = coordinate[0];
             const lat = coordinate[1];
             console.log(lon, lat);
+            onClick(lon, lat);
         });
 
         // To solve little bug on map loading when display map for the first time

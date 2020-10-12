@@ -11,49 +11,59 @@ class Application {
     }
 
     constructor() {
-        this._info = document.querySelector("#data");
-        this.onSearch = this.onSearch.bind(this);
+        this.onCitySearch = this.onCitySearch.bind(this);
+        this.onCoordinateSearch = this.onCoordinateSearch.bind(this);
 
-        this._searchBar = new SearchBar(this.onSearch);
+        this._searchBar = new SearchBar(this.onCitySearch);
         this._collapseDays = new CollapseDays();
-        this._map = new Map();
+        this._map = new Map(this.onCoordinateSearch);
     }
 
     getCityData(city) {
         return get(`${this._API_ENTRY}${city}`)
     }
-
-
-    onSearch(city) {
-        this.getCityData(city)
-        .then(data => {               
-               if (data.errors !== undefined) {
-                   console.log("There is an error...-> " + data.errors.code);
-                   if (data.errors[0].code == this._CITY_NOT_FOUND_ERROR) {
-                       console.log("City not found error !");
-                       document.querySelector("#error-city-not-found").classList.remove("hidden");
-
-                        return;
-                    }
-                }
-
-                document.querySelector("#mainContainer").classList.remove("hidden");
-                document.querySelector("#error-city-not-found").classList.add("hidden");
-                
-
-                this._data = data;
-                this.updateInformation();
-
-                setTimeout(() => {
-                    let d = document.querySelector("#day0-info")
-                    console.log(d);
-
-                    if (!d.classList.contains("show")) {
-                        document.querySelector("#daily-button-container:first-child button").click()
-                    }
-                }, 1000);
-            });
+    
+    getCoordinateData(lon, lat) {
+        return get(`${this._API_ENTRY}lat=${lat}lng=${lon}`);
     }
+
+    onCoordinateSearch(lon, lat) {
+        this.getCoordinateData(lon, lat)
+        .then(data => this.onResult(data));
+    }
+
+    onCitySearch(city) {
+        this.getCityData(city)
+        .then(data => this.onResult(data));
+    }
+
+    onResult(data) {               
+        if (data.errors !== undefined) {
+            console.log("There is an error...-> " + data.errors.code);
+            if (data.errors[0].code == this._CITY_NOT_FOUND_ERROR) {
+                console.log("City not found error !");
+                document.querySelector("#error-city-not-found").classList.remove("hidden");
+
+                 return;
+             }
+         }
+
+         document.querySelector("#mainContainer").classList.remove("hidden");
+         document.querySelector("#error-city-not-found").classList.add("hidden");
+         
+
+         this._data = data;
+         this.updateInformation();
+
+         setTimeout(() => {
+             let d = document.querySelector("#day0-info")
+             console.log(d);
+
+             if (!d.classList.contains("show")) {
+                 document.querySelector("#daily-button-container:first-child button").click()
+             }
+         }, 1000);
+     }
 
     updateInformation() {
         console.log("Updating informations...");
