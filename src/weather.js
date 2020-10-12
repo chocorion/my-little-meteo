@@ -29,7 +29,13 @@ class Application {
 
     onCoordinateSearch(lon, lat) {
         this.getCoordinateData(lon, lat)
-        .then(data => this.onResult(data));
+        .then(data => {
+            data["city_info"]["name"] = `
+                lat : ${Math.round(lat * 100)/100}
+                lon : ${Math.round(lon * 100)/100}`;
+
+            this.onResult(data)
+        });
     }
 
     onCitySearch(city) {

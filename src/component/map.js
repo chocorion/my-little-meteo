@@ -21,7 +21,7 @@ class Map {
             const coordinate = ol.proj.transform(event.coordinate, 'EPSG:3857', 'EPSG:4326');
             const lon = coordinate[0];
             const lat = coordinate[1];
-            console.log(lon, lat);
+            
             onClick(lon, lat);
         });
 
