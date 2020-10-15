@@ -88,6 +88,14 @@ class TemperatureChart {
 					beginAtZero: false
 				}
 				}]
+			},
+			layout: {
+				padding: {
+					left: 35,
+					right: 35,
+					top: 35,
+					bottom: 35
+				}
 			}
 		}
     }
