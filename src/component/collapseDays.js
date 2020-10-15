@@ -1,10 +1,11 @@
 class CollapseDays {
-    constructor() {
-        this.setOnClick()
+    constructor(numberOfDay = 5) {
+        this._numberOfDay = numberOfDay;
+        this.setOnClick();
     }
 
     updateCollapseInfos(infos) {
-        for (let day = 0; day < 5; day++) {
+        for (let day = 0; day < this._numberOfDay; day++) {
             this.updateDailyInfo(day, infos[`fcst_day_${day}`]);
             this.updateDailyTemperatures(day, infos[`fcst_day_${day}`]);
         }
@@ -12,7 +13,7 @@ class CollapseDays {
 
     setOnClick() {
         this._currentlySelected = document.querySelector(`button[href="#day0-info"]`);
-        for (let i = 0; i <= 4; i++) {
+        for (let i = 0; i < this._numberOfDay; i++) {
             const button = document.querySelector(`button[href="#day${i}-info"]`);
             button.addEventListener(
                 "click",

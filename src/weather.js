@@ -1,6 +1,3 @@
-// https://www.prevision-meteo.ch/services/json/[nom_ville][lat=xx.xxxlng=yy.yyy]
-
-
 class Application {
     get _API_ENTRY() {
         return "https://www.prevision-meteo.ch/services/json/"
@@ -14,9 +11,9 @@ class Application {
         this.onCitySearch = this.onCitySearch.bind(this);
         this.onCoordinateSearch = this.onCoordinateSearch.bind(this);
 
-        this._searchBar = new SearchBar(this.onCitySearch);
-        this._collapseDays = new CollapseDays();
-        this._map = new Map(this.onCoordinateSearch);
+        this._searchBar     = new SearchBar(this.onCitySearch);
+        this._collapseDays  = new CollapseDays();
+        this._map           = new Map(this.onCoordinateSearch);
     }
 
     getCityData(city) {
@@ -45,12 +42,11 @@ class Application {
 
     onResult(data) {               
         if (data.errors !== undefined) {
-            console.log("There is an error...-> " + data.errors.code);
             if (data.errors[0].code == this._CITY_NOT_FOUND_ERROR) {
                 console.log("City not found error !");
                 document.querySelector("#error-city-not-found").classList.remove("hidden");
 
-                 return;
+                return;
              }
          }
 
@@ -63,7 +59,6 @@ class Application {
 
          setTimeout(() => {
              let d = document.querySelector("#day0-info")
-             console.log(d);
 
              if (!d.classList.contains("show")) {
                  document.querySelector("#daily-button-container:first-child button").click()
@@ -72,9 +67,6 @@ class Application {
      }
 
     updateInformation() {
-        console.log("Updating informations...");
-        console.log(JSON.stringify(this._data, null, 4));
-
         this.updateJumbotron()
         this._collapseDays.updateCollapseInfos(this._data);
     }
