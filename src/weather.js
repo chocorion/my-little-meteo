@@ -1,46 +1,31 @@
 class Application {
-    get _API_ENTRY() {
-        return "https://www.prevision-meteo.ch/services/json/"
-    }
-
     get _CITY_NOT_FOUND_ERROR() {
         return "11";
     }
 
     constructor() {
-        this.onCitySearch = this.onCitySearch.bind(this);
+        // Change the ref to use another api
+        this._api = new APIPrevisionMeteo();
+        
+        this.onCitySearch       = this.onCitySearch.bind(this);
         this.onCoordinateSearch = this.onCoordinateSearch.bind(this);
 
         this._searchBar     = new SearchBar(this.onCitySearch);
-        this._collapseDays  = new CollapseDays();
         this._map           = new Map(this.onCoordinateSearch);
-    }
-
-    getCityData(city) {
-        return get(`${this._API_ENTRY}${city}`)
-    }
-    
-    getCoordinateData(lon, lat) {
-        return get(`${this._API_ENTRY}lat=${lat}lng=${lon}`);
+        this._collapseDays  = new CollapseDays();
     }
 
     onCoordinateSearch(lon, lat) {
-        this.getCoordinateData(lon, lat)
-        .then(data => {
-            data["city_info"]["name"] = `
-                lat : ${Math.round(lat * 100)/100}
-                lon : ${Math.round(lon * 100)/100}`;
-
-            this.onResult(data)
-        });
+        this._api.refreshByCoord(lon, lat)
+        .then(() => this.onResult());
     }
 
     onCitySearch(city) {
-        this.getCityData(city)
-        .then(data => this.onResult(data));
+        this._api.refreshByCity(city)
+        .then(() => this.onResult());
     }
 
-    onResult(data) {               
+    onResult() {               
         if (data.errors !== undefined) {
             if (data.errors[0].code == this._CITY_NOT_FOUND_ERROR) {
                 document.querySelector("#error-city-not-found").classList.remove("hidden");
@@ -51,11 +36,7 @@ class Application {
         document.querySelector("#mainContainer").classList.remove("hidden");
         document.querySelector("#error-city-not-found").classList.add("hidden");
         
-
-        this._data = data;
         this.updateInformation();
-
-        console.log(data);
 
         setTimeout(() => {
             let d = document.querySelector("#day0-info")
@@ -68,18 +49,21 @@ class Application {
 
     updateInformation() {
         this.updateJumbotron()
-        this._collapseDays.updateCollapseInfos(this._data);
+        this._collapseDays.updateCollapseInfos(this._api);
     }
     
     updateJumbotron() {
-        document.querySelector(".jumbotron .city-name").innerHTML = this._data["city_info"]["name"];
-        document.querySelector(".jumbotron .condition").innerHTML = this._data["current_condition"]["condition"];
-        document.querySelector(".jumbotron .temperature").innerHTML = this._data["current_condition"]["tmp"] + "°c";
+        const city = this._api.getCityInformations();
+        const currentCondition = this._api.getDayInformations()[(new Date()).getHours()];
+
+        document.querySelector(".jumbotron .city-name").innerHTML = city.name;
+        document.querySelector(".jumbotron .condition").innerHTML = currentCondition.condition;
+        document.querySelector(".jumbotron .temperature").innerHTML = currentCondition.temperature + "°c";
         
         const image = document.querySelector('#weather-image');
         image.setAttribute(
             'src',
-            `resources/weather_img/${conditions[this._data["current_condition"]["condition"]]}.svg`
+            `resources/weather_img/${conditions[currentCondition.condition]}.svg`
         );
     }
 }

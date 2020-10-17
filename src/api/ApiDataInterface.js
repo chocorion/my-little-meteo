@@ -24,7 +24,7 @@ class ApiDataInterface {
         return this._meteo.city;
     }
 
-    refreshCity(cityName) {
+    refreshByCity(cityName) {
         return new Promise((resolve, reject) => {
             get(this._getCityUrl(cityName))
                 .then(data => {
@@ -38,7 +38,7 @@ class ApiDataInterface {
         }); 
     }
 
-    refreshCoord(lon, lat) {
+    refreshByCoord(lon, lat) {
         return new Promise((resolve, reject) => {
             get(this._getCoordUrl(lon, lat))
                 .then(data => {

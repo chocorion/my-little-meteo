@@ -11,7 +11,7 @@ class APIPrevisionMeteo extends ApiDataInterface {
         this._extractCityInformation(data.city_info);
 
         for (let day = 0; day < this._numberOfDays; day++) 
-            this._extractDayInformation(data[`fcst_day${i}`], i);
+            this._extractDayInformation(data[`fcst_day_${day}`], day);
     }
 
     _extractCityInformation(cityData) {
@@ -35,17 +35,17 @@ class APIPrevisionMeteo extends ApiDataInterface {
         currentDay.day = dayData.day_long;
         currentDay.temperatureMin = dayData.tmin;
         currentDay.temperatureMax = dayData.tmax;
-        currentDay.averageConditino = dayData.condition;
+        currentDay.averageCondition = dayData.condition;
 
-        for (const hour of dayNumber.hourly_data)
-            this._extractHourInformation(hour, dayData.hourly_data[hour]);
+        for (const hour in dayData.hourly_data)
+            this._extractHourInformation(hour, dayData.hourly_data[hour], dayNumber);
     }
 
-    _extractHourInformation(hour, data) {
+    _extractHourInformation(hour, data, day) {
         const intHour = +hour.split("H")[0];
-        this._meteo.conditions.hours[intHour] = {};
+        this._meteo.conditions[day].hours[intHour] = {};
 
-        const currentHour = this._meteo.conditions.hours[intHour];
+        const currentHour = this._meteo.conditions[day].hours[intHour];
 
         currentHour.condition = data.CONDITION;
         currentHour.temperature = data.TMP2m;
@@ -60,5 +60,17 @@ class APIPrevisionMeteo extends ApiDataInterface {
 
     _getCoordUrl(lon, lat) {
         return `${this._apiUrl}lat=${lat}lng=${lon}`
+    }
+
+    refreshByCoord(lon, lat) {
+        return new Promise((resolve, reject) => {
+            super.refreshByCoord(lon, lat)
+            .then(() => {
+                this._meteo.city.name = `
+                    lat : ${Math.round(lat * 100)/100}
+                    lon : ${Math.round(lon * 100)/100}`;
+                resolve();
+            }).catch(error => reject(error));
+        });
     }
 }
