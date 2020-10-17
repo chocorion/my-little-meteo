@@ -14,12 +14,12 @@ class TemperatureChart {
 		
 		const promises = []
 
-        for (const hour in infos["hourly_data"]) {
+        for (const hour in infos.hours) {
             temperatures.labels.push(hour);
-            temperatures.datasets[0].data.push(infos["hourly_data"][hour]["TMP2m"]);
+            temperatures.datasets[0].data.push(infos.hours[hour].temperature);
 
             const img = new Image(50, 50);
-            const condition = conditions[infos["hourly_data"][hour]["CONDITION"]];
+            const condition = conditions[infos.hours[hour].condition];
 
             img.src = `/resources/weather_img/${condition}.svg`;
 			temperatures.datasets[0].conditionImages.push(img);
