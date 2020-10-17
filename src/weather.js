@@ -43,28 +43,28 @@ class Application {
     onResult(data) {               
         if (data.errors !== undefined) {
             if (data.errors[0].code == this._CITY_NOT_FOUND_ERROR) {
-                console.log("City not found error !");
                 document.querySelector("#error-city-not-found").classList.remove("hidden");
-
                 return;
-             }
-         }
+            }
+        }
 
-         document.querySelector("#mainContainer").classList.remove("hidden");
-         document.querySelector("#error-city-not-found").classList.add("hidden");
-         
+        document.querySelector("#mainContainer").classList.remove("hidden");
+        document.querySelector("#error-city-not-found").classList.add("hidden");
+        
 
-         this._data = data;
-         this.updateInformation();
+        this._data = data;
+        this.updateInformation();
 
-         setTimeout(() => {
-             let d = document.querySelector("#day0-info")
+        console.log(data);
 
-             if (!d.classList.contains("show")) {
-                 document.querySelector("#daily-button-container:first-child button").click()
-             }
-         }, 1000);
-     }
+        setTimeout(() => {
+            let d = document.querySelector("#day0-info")
+
+            if (!d.classList.contains("show")) {
+                document.querySelector("#daily-button-container:first-child button").click()
+            }
+        }, 1000);
+    }
 
     updateInformation() {
         this.updateJumbotron()
