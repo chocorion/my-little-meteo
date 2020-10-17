@@ -17,6 +17,9 @@ class SearchBar {
             'click',
             event => {
                 event.preventDefault();
+                if (this._text.value === '')
+                    return;
+
                 if (!isNaN(this._text.value)) {
                     get(API_CODES + this._text.value)
                     .then(value => {
@@ -33,7 +36,7 @@ class SearchBar {
                         }
                     });
                 }
-                else if (this._text.value !== '')
+                else
                     this._onClick(this._text.value);
 
             }
