@@ -21,7 +21,7 @@ class TemperatureChart {
             const img = new Image(50, 50);
             const condition = conditions[infos.hours[hour].condition];
 
-            img.src = `/resources/weather_img/${condition}.svg`;
+            img.src = `resources/weather_img/${condition}.svg`;
 			temperatures.datasets[0].conditionImages.push(img);
 			
 			promises.push(new Promise((resolve, reject) => {
