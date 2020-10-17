@@ -21,18 +21,19 @@ class Application {
     }
 
     onCitySearch(city) {
+        console.log("City search...");
         this._api.refreshByCity(city)
-        .then(() => this.onResult());
+        .then(() => {
+            console.log("Success !");
+            this.onResult()
+        })
+        .catch(error => {
+            console.error(error);
+            document.querySelector("#error-city-not-found").classList.remove("hidden");
+        });
     }
 
     onResult() {               
-        if (data.errors !== undefined) {
-            if (data.errors[0].code == this._CITY_NOT_FOUND_ERROR) {
-                document.querySelector("#error-city-not-found").classList.remove("hidden");
-                return;
-            }
-        }
-
         document.querySelector("#mainContainer").classList.remove("hidden");
         document.querySelector("#error-city-not-found").classList.add("hidden");
         
@@ -54,7 +55,7 @@ class Application {
     
     updateJumbotron() {
         const city = this._api.getCityInformations();
-        const currentCondition = this._api.getDayInformations()[(new Date()).getHours()];
+        const currentCondition = this._api.getDayInformations(0).hours[(new Date()).getHours()];
 
         document.querySelector(".jumbotron .city-name").innerHTML = city.name;
         document.querySelector(".jumbotron .condition").innerHTML = currentCondition.condition;

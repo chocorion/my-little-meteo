@@ -2,9 +2,13 @@ class APIPrevisionMeteo extends ApiDataInterface {
     constructor() {
         super("https://www.prevision-meteo.ch/services/json/");
         this._numberOfDays = 5;
+
+        this._cityNotFoundError = "11";
     }
 
     _parse(data) {
+        this._checkErrors(data);
+
         this._meteo = {};
         this._meteo.conditions = {};
         
@@ -12,6 +16,13 @@ class APIPrevisionMeteo extends ApiDataInterface {
 
         for (let day = 0; day < this._numberOfDays; day++) 
             this._extractDayInformation(data[`fcst_day_${day}`], day);
+    }
+
+    _checkErrors(data) {
+        if (data.errors !== undefined) {
+            if (data.errors[0].code === this._cityNotFoundError) 
+                throw new Error("City no found !");
+        }
     }
 
     _extractCityInformation(cityData) {

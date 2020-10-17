@@ -1,7 +1,7 @@
 class ApiDataInterface {
     constructor(apiUrl) {
         if (this.constructor === ApiDataInterface) {
-            throw new TypeError("Abstract interface can't be implemented directly");
+            throw new Error("Abstract interface can't be implemented directly");
         }
 
         this._apiUrl = apiUrl;
@@ -15,8 +15,8 @@ class ApiDataInterface {
 
     getDayInformations(day) {
         if (day < 0 || day >=this._numberOfDays) 
-            throw new Exception(`Can't get information for day ${day}, there is only ${this._numberOfDays} days.`);
-        
+            throw new Error(`Can't get information for day ${day}, there is only ${this._numberOfDays} days.`);
+            
         return this._meteo.conditions[day];
     }
 
@@ -53,14 +53,14 @@ class ApiDataInterface {
     }
 
     _parse(url) {
-        throw new Exception("_parse method must be implemented !");
+        throw new Error("_parse method must be implemented !");
     }
     
     _getCityUrl(cityName) {
-        throw new Exception("_getCityUrl method must be implemented !");
+        throw new Error("_getCityUrl method must be implemented !");
     }
     
     _getCoordUrl(lon, lat) {
-        throw new Exception("_getCoordUrl method must be implemented !");
+        throw new Error("_getCoordUrl method must be implemented !");
     }
 }
