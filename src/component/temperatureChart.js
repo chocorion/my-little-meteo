@@ -18,7 +18,7 @@ class TemperatureChart {
             temperatures.labels.push(hour);
             temperatures.datasets[0].data.push(infos.hours[hour].temperature);
 
-            const img = new Image(50, 50);
+            const img = new Image(30, 30);
             const condition = conditions[infos.hours[hour].condition];
 
             img.src = `resources/weather_img/${condition}.svg`;
@@ -63,7 +63,7 @@ class TemperatureChart {
 							const img = dataset.conditionImages[index];
 							ctx.fillStyle = "#000000"
 							ctx.fillText(data + "°", bar._model.x, bar._model.y - 10);
-							ctx.drawImage(img, bar._model.x, bar._model.y - 25, 50, 50);
+							ctx.drawImage(img, bar._model.x - 15, bar._model.y - 50, 30, 30);
 						});
 					});
 				}
@@ -94,7 +94,7 @@ class TemperatureChart {
 				padding: {
 					left: 35,
 					right: 35,
-					top: 35,
+					top: 50,
 					bottom: 35
 				}
 			}
