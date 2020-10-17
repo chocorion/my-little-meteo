@@ -34,7 +34,7 @@ class Application {
                     return;
                 }
             }
-            
+
             document.querySelector("#error-city-not-found").classList.remove("hidden");
         });
     }
@@ -68,6 +68,8 @@ class Application {
         document.querySelector(".jumbotron .temperature").innerHTML = currentCondition.temperature + "°c";
         document.querySelector("#wind-direction").innerHTML = currentCondition.windDirection;
         document.querySelector("#wind-speed").innerHTML = currentCondition.windSpeed;
+        document.querySelector("#sunrise").innerHTML = city.sunrise;
+        document.querySelector("#sunset").innerHTML = city.sunset;
 
         const image = document.querySelector('#weather-image');
         image.setAttribute(

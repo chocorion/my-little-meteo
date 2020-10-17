@@ -1,4 +1,5 @@
 class Map {
+    // I don't use google map because I don't know how to use it without giving my credit card to google.
     constructor(onClick) {
         this._map = new ol.Map({
             target: 'map',
@@ -12,9 +13,6 @@ class Map {
                 zoom: 5
             })
         });
-
-
-          
 
         this._map.on('singleclick', event => {
             // convert coordinate to EPSG-4326

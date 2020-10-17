@@ -10,3 +10,12 @@
 .wind-direction-image {
     width: 2em;
 }
+
+#weather-image {
+    width: 30%;
+}
+
+#weather-image-container {
+    display: flex;
+    justify-content: center;
+}

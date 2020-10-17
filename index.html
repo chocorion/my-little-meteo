@@ -61,17 +61,23 @@
 
         <div id="mainContainer" class="container-md bg-light pt-2 hidden">
             <div class="jumbotron pt-0">
-                <div class="row">
-                    <div class="col-3 mt-5">
+                <div class="row justify-content-center">
+                    <div class="col-3-lg mt-5 ml-5 text-lg-left text-md-center text-sm-center">
                         <h5 class="city-name"></h5>
                         <h1 class="temperature"></h1>
                         <h3 class="condition"></h3>
                         <img src="resources/weather_img/wi-strong-wind.svg" class="img-fluid wind-direction-image" alt=""><span id="wind-direction"></span> - 
                         <span id="wind-speed"></span> km/h
                     </div>
+                    <div class="col-lg" id="weather-image-container">
+                        <img src="" alt="" id="weather-image">
+                    </div>
+                </div>
 
-                    <div class="col mt-2">
-                        <img src="" alt="" class="img-fluid w-50" id="weather-image">
+                <div class="row justify-content-center mt-4">
+                    <div class="col-2-md">
+                        <h5>Le soleil se lève à : <span id="sunrise"></span></h5>
+                        <h5>Et il se couche à : <span id="sunset"></span></h5>
                     </div>
                 </div>
             </div>

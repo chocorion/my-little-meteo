@@ -30,6 +30,7 @@ class TemperatureChart {
 			}))
         }
 
+		// Wait all images to load before creating chart
 		Promise.all(promises)
 			.then(() => {
 				this._chart = new Chart(ctx, {
