@@ -60,7 +60,9 @@ class Application {
         document.querySelector(".jumbotron .city-name").innerHTML = city.name;
         document.querySelector(".jumbotron .condition").innerHTML = currentCondition.condition;
         document.querySelector(".jumbotron .temperature").innerHTML = currentCondition.temperature + "°c";
-        
+        document.querySelector("#wind-direction").innerHTML = currentCondition.windDirection;
+        document.querySelector("#wind-speed").innerHTML = currentCondition.windSpeed;
+
         const image = document.querySelector('#weather-image');
         image.setAttribute(
             'src',

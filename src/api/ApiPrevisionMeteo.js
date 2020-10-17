@@ -7,6 +7,7 @@ class APIPrevisionMeteo extends ApiDataInterface {
     }
 
     _parse(data) {
+        console.log(data);
         this._checkErrors(data);
 
         this._meteo = {};
