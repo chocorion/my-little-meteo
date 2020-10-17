@@ -4,10 +4,10 @@ class CollapseDays {
         this.setOnClick();
     }
 
-    updateCollapseInfos(infos) {
+    updateCollapseInfos(apiWrapper) {
         for (let day = 0; day < this._numberOfDay; day++) {
-            this.updateDailyInfo(day, infos[`fcst_day_${day}`]);
-            this.updateDailyTemperatures(day, infos[`fcst_day_${day}`]);
+            this.updateDailyInfo(day, apiWrapper.getDayInformations(day));
+            this.updateDailyTemperatures(day, apiWrapper.getDayInformations(day));
         }
     }
 
@@ -31,13 +31,13 @@ class CollapseDays {
     }
 
     updateDailyInfo(day, infos) {
-        document.querySelector(`#day${day}-button`).innerHTML = infos["day_long"];
+        document.querySelector(`#day${day}-button`).innerHTML = infos.day;
 
         const div = document.querySelector(`#day${day}-info .infos`);
-        div.innerHTML = `Météo pour ${infos["day_long"]} : <br>`
-        div.innerHTML += `Condition : ${infos["condition"]} <br>`
-        div.innerHTML += `Température minimum : ${infos['tmin']} <br>`
-        div.innerHTML += `Température maximum : ${infos['tmax']} <br>`
+        div.innerHTML = `Météo pour ${infos.day} : <br>`
+        div.innerHTML += `Condition : ${infos.averageCondition} <br>`
+        div.innerHTML += `Température minimum : ${infos.temperatureMin} <br>`
+        div.innerHTML += `Température maximum : ${infos.temperatureMax} <br>`
     }
 
     updateDailyTemperatures(day, infos) {
