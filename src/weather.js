@@ -1,11 +1,7 @@
 class Application {
-    get _CITY_NOT_FOUND_ERROR() {
-        return "11";
-    }
-
     constructor() {
         // You can use object that respect MeteoApiWrapper interface.
-        this._api = new APIPrevisionMeteo();
+        this._apiWrapper = new APIPrevisionMeteo();
         
         this.onCitySearch       = this.onCitySearch.bind(this);
         this.onCoordinateSearch = this.onCoordinateSearch.bind(this);
@@ -13,15 +9,16 @@ class Application {
         this._searchBar     = new SearchBar(this.onCitySearch);
         this._map           = new Map(this.onCoordinateSearch);
         this._collapseDays  = new CollapseDays();
+        this._mainInsert    = new MainInsert();
     }
 
     onCoordinateSearch(lon, lat) {
-        this._api.refreshByCoord(lon, lat)
+        this._apiWrapper.refreshByCoord(lon, lat)
         .then(() => this.onResult());
     }
 
     onCitySearch(city) {
-        this._api.refreshByCity(city)
+        this._apiWrapper.refreshByCity(city)
         .then(() => {
             this.onResult()
         })
@@ -45,6 +42,7 @@ class Application {
         
         this.updateInformation();
 
+        // Show with a timeout, just for style.
         setTimeout(() => {
             let d = document.querySelector("#day0-info")
 
@@ -55,27 +53,8 @@ class Application {
     }
 
     updateInformation() {
-        this.updateJumbotron()
-        this._collapseDays.updateCollapseInfos(this._api);
-    }
-    
-    updateJumbotron() {
-        const city = this._api.getCityInformations();
-        const currentCondition = this._api.getDayInformations(0).hours[(new Date()).getHours()];
-
-        document.querySelector(".jumbotron .city-name").innerHTML = city.name;
-        document.querySelector(".jumbotron .condition").innerHTML = currentCondition.condition;
-        document.querySelector(".jumbotron .temperature").innerHTML = currentCondition.temperature + "°c";
-        document.querySelector("#wind-direction").innerHTML = currentCondition.windDirection;
-        document.querySelector("#wind-speed").innerHTML = currentCondition.windSpeed;
-        document.querySelector("#sunrise").innerHTML = city.sunrise;
-        document.querySelector("#sunset").innerHTML = city.sunset;
-
-        const image = document.querySelector('#weather-image');
-        image.setAttribute(
-            'src',
-            `resources/weather_img/${conditions[currentCondition.condition]}.svg`
-        );
+        this._mainInsert.update(this._apiWrapper);
+        this._collapseDays.updateCollapseInfos(this._apiWrapper);
     }
 }
 

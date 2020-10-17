@@ -57,6 +57,7 @@ class TemperatureChart {
 					ctx.textAlign = 'center';
 					ctx.textBaseline = 'bottom';
 
+					// Draw weather icon and write temperature on chart. Icon are not shown on firefox, I don't find why...
 					this.data.datasets.forEach((dataset, i) => {
 						let meta = chartInstance.controller.getDatasetMeta(i);
 						meta.data.forEach((bar, index) => {
