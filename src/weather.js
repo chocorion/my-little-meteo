@@ -4,7 +4,7 @@ class Application {
     }
 
     constructor() {
-        // Change the ref to use another api
+        // You can use object that respect MeteoApiWrapper interface.
         this._api = new APIPrevisionMeteo();
         
         this.onCitySearch       = this.onCitySearch.bind(this);
@@ -21,14 +21,20 @@ class Application {
     }
 
     onCitySearch(city) {
-        console.log("City search...");
         this._api.refreshByCity(city)
         .then(() => {
-            console.log("Success !");
             this.onResult()
         })
         .catch(error => {
-            console.error(error);
+            // Little trick. Try to remove "le"/"la" before city name for helping api finding city.
+            if (city !== undefined) {
+                const splitted = city.split(" ");
+                if (splitted.length > 1) {
+                    this.onCitySearch(splitted[splitted.length - 1]);
+                    return;
+                }
+            }
+            
             document.querySelector("#error-city-not-found").classList.remove("hidden");
         });
     }

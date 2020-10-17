@@ -1,7 +1,8 @@
-const API_CODES = "https://apicarto.ign.fr/api/codes-postaux/communes/"
-
 class SearchBar {
     constructor(onClick) {
+        // You can use object that respect locationApiWrapper interface.
+        this._locationApi = new Apicarto();
+        
         this._menuForm = document.querySelector("#searchBar form");
         this._button = document.querySelector("#searchBar button");
         this._text = document.querySelector("#searchBar input");
@@ -17,28 +18,18 @@ class SearchBar {
             'click',
             event => {
                 event.preventDefault();
+
                 if (this._text.value === '')
                     return;
 
                 if (!isNaN(this._text.value)) {
-                    get(API_CODES + this._text.value)
-                    .then(value => {
-                        let communeName = value[0].nomCommune;
-
-                        if (typeof communeName === undefined)
-                            this._onClick('');
-                        
-                        else {
-                            let splitedName = communeName.split(" ");
-                            communeName = splitedName[splitedName.length - 1];
-
-                            this._onClick(communeName)
-                        }
-                    });
+                    this._locationApi.getLocationFromCode(this._text.value)
+                    .then(cityName => this._onClick(cityName))
+                    .catch (() => this._onClick(''));
                 }
+
                 else
                     this._onClick(this._text.value);
-
             }
         );
     }

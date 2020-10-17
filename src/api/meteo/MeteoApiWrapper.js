@@ -1,8 +1,7 @@
-class ApiDataInterface {
+class MeteoAPIWrapper {
     constructor(apiUrl) {
-        if (this.constructor === ApiDataInterface) {
+        if (this.constructor === MeteoAPIWrapper)
             throw new Error("Abstract interface can't be implemented directly");
-        }
 
         this._apiUrl = apiUrl;
         this._numberOfDays = 0;

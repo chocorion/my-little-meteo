@@ -1,4 +1,4 @@
-class APIPrevisionMeteo extends ApiDataInterface {
+class APIPrevisionMeteo extends MeteoAPIWrapper {
     constructor() {
         super("https://www.prevision-meteo.ch/services/json/");
         this._numberOfDays = 5;
@@ -7,7 +7,6 @@ class APIPrevisionMeteo extends ApiDataInterface {
     }
 
     _parse(data) {
-        console.log(data);
         this._checkErrors(data);
 
         this._meteo = {};
