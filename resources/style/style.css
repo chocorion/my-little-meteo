@@ -19,3 +19,7 @@
     display: flex;
     justify-content: center;
 }
+
+canvas .temperatures {
+    width: 100%;
+}

@@ -36,8 +36,8 @@ class CollapseDays {
         const div = document.querySelector(`#day${day}-info .infos`);
         div.innerHTML = `Météo pour ${infos.day} : <br>`
         div.innerHTML += `Condition : ${infos.averageCondition} <br>`
-        div.innerHTML += `Température minimum : ${infos.temperatureMin} <br>`
-        div.innerHTML += `Température maximum : ${infos.temperatureMax} <br>`
+        div.innerHTML += `Température minimum : ${infos.temperatureMin}°c <br>`
+        div.innerHTML += `Température maximum : ${infos.temperatureMax}°c <br>`
     }
 
     updateDailyTemperatures(day, infos) {

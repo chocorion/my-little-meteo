@@ -42,3 +42,14 @@ const conditions = {
     "Pluie et neige mêlée modérée": "wi-snow",
     "Pluie et neige mêlée forte": "wi-snow"
 }
+
+windDirections = {
+    "E": "Est",
+    "O": "Ouest",
+    "N": "Nord",
+    "S": "Sud",
+    "SE": "Sud-Est",
+    "SO": "Sud-Ouest",
+    "NE": "Nord-Est",
+    "NO": "Nord-Ouest"
+};

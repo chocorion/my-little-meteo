@@ -62,7 +62,7 @@ class APIPrevisionMeteo extends MeteoAPIWrapper {
         currentHour.temperature = data.TMP2m;
         currentHour.humidity = data.RH2m;
         currentHour.windSpeed = data.WNDSPD10m;
-        currentHour.windDirection = data.WNDDIRCARD10;
+        currentHour.windDirection = windDirections[data.WNDDIRCARD10];
     }
 
     _getCityUrl(cityName) {

@@ -43,6 +43,7 @@ class TemperatureChart {
 
     static get options() {
       return {
+			maintainAspectRatio: true,
 			hover: {
 				animationDuration: 0
 			},
